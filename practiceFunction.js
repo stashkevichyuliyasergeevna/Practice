@@ -1,0 +1,153 @@
+// Создайте функцию, которая использует внешнюю переменную counter, 
+// увеличивая её значение на 1 при каждом вызове. (использовать доступ к внешней переменной)
+let counter = 1
+function practice1() {
+    counter++
+}
+practice1()
+practice1()
+practice1()
+console.log(counter) // 4
+
+
+// Напишите функцию greet, которая принимает имя как аргумент и вызывает другую функцию getGreeting(), 
+// чтобы получить приветствие, и возвращает полное сообщение. (вызов функций)
+function getGreeting() {
+    return `Приветствую тебя`
+}
+function greet(name) {
+    return `${getGreeting()}, ${name}! Сегодня отличный день!`
+}
+console.log(greet(`Юлия`)) // Приветствую тебя, Юлия! Сегодня отличный день!
+
+
+// Объявите переменную name внутри функции с тем же именем, что и внешняя переменная name. 
+// Внутри функции присвойте ей новое значение. После вызова функции проверьте, 
+// какая переменная изменилась — внутренняя или внешняя. (перекрытие внешних переменных)
+let name = `Yuliya`
+function practice2() {
+    let name = `Timosha`
+    return name
+}
+practice2()
+console.log(name) // Yuliya
+console.log(practice2()) // Timosha
+console.log(name) // Yuliya
+// Переменная, объявленая внутри функции, остается внутри, не изменяя внешнюю переменную, 
+// но при этом, являясь локальной, она перекрывает глобальную, поэтому внутри функции name = `Timosha`, 
+// а снаружи name = `Yuliya`
+
+
+// Создайте функцию calculateArea, которая принимает ширину и высоту как аргументы и возвращает площадь. 
+// Если высота не передана, она должна равняться 10 по умолчанию. (использование значений по умолчанию)
+function calculateArea(width, height = 10) {
+    return width * height
+}
+console.log(calculateArea()) // NaN
+console.log(calculateArea(10)) // 100
+console.log(calculateArea(20, 30)) // 600
+
+
+// Напишите функцию showMessage(from, text = getDefaultText()), где getDefaultText() — функция, возвращающая строку по умолчанию. 
+// Проверьте, чему равен аргумент text, если его не передать при вызове. (вычисление параметров по умолчанию)
+function getDefaultText() {
+    return `программировать`
+}
+function showMessage(from, text = getDefaultText()) {
+    return `Привет! Я ${from}, умею ${text}`
+}
+console.log(showMessage(`Тимоша`, `какаться`)) // Привет! Я Тимоша, умею какаться
+console.log(showMessage(`Юля`)) // Привет! Я Юля, умею программировать
+console.log(showMessage()) // Привет! Я undefined, умею программировать
+
+
+// Создайте функцию processData(data), которая проверяет, что переданный аргумент 
+// не равен null или undefined с помощью операторов ?? и ??=. 
+// Если он равен null или undefined, присвой ему значение по умолчанию. (проверка на null/undefined с ?? и ??=)
+function processData(data) {
+    data = data ?? `данные111`
+    // или data ??= `данные111`
+    return data
+}
+console.log(processData()) // данные111
+console.log(processData(`данные222`)) // данные222
+
+
+// Напишите большую функцию main(), которая вызывает несколько вспомогательных функций: 
+// одна для получения данных, другая — для их обработки, третья — для отображения результата. 
+// Каждая из этих функций должна быть простой и выполнять свою задачу отдельно. (структура большой функции из вызовов меньших)
+function receiving() {
+    return Math.random()
+}
+function processing(number1, number2) {
+    return number1 * number2
+}
+function displaying(result) {
+    return `Готовый ответ ${result}`
+}
+function main(data1 = 111, data2 = receiving()) {
+    let newData = processing(data1, data2)
+    return displaying(newData)
+}
+console.log(main()) // Готовый ответ 29.286612702689634
+console.log(main(10, 10)) // Готовый ответ 100
+console.log(main(10)) // Готовый ответ 2.680244376990477
+
+
+// Создайте функцию через Function Expression, которая принимает число и возвращает его квадрат. 
+// Назовите её square. Затем вызовите её с числом 5.
+// Сделайте то же самое через Function Declaration
+const square = function (number) {
+    return number * number
+}
+console.log(square(5)) // 25
+
+function square2(number) {
+    return number * number
+}
+console.log(square2(5)) // 25
+
+//Объявите функцию через Function Expression и попробуйте вызвать её до объявления. Что произойдет? Почему?
+practice3() // ReferenceError: Cannot access 'practice3' before initialization
+const practice3 = function () {
+    return 1
+}
+// Когда функция объявлена, как Function Expression, она будет задекларирована только когда выполнение кода дойдет 
+// до const practice3 = ..., а до этого момента функция считается не объявленной. В отличии от Function Declaration, поскольку
+// js перед выполнением кода ищет все декларативные функции и как-бы "поднимает" их вверх, тем самым создавая (декларируя)
+
+
+// Создайте стрелочную функцию greet, которая принимает имя и возвращает строку "Привет, <имя>!". 
+// Внутри функции используйте переменную greetingPrefix = "Привет" вне функции. 
+// Проверьте, можете ли вы обратиться к этой переменной внутри стрелочной функции.
+const greetingPrefix = "Привет"
+const greet = (name) => {
+    return `${greetingPrefix}, ${name}!`
+}
+console.log(greet(`Юлия`)) // Привет, Юлия!
+// Стрелочная функция имеет доступ к переменным, объявленным в внешней области.
+
+
+// Перепишите с использованием стрелочной функции:
+function ask(question, yes, no) {
+    if (confirm(question)) yes()
+    else no();
+}
+// let ask = (question, yes, no) => confirm(question) ? yes() : no()
+ask(
+    "Вы согласны?",
+    function () { alert("Вы согласились."); },
+    function () { alert("Вы отменили выполнение."); }
+);
+// let ask("Вы согласны?",
+// () => alert("Вы согласились."),
+// () => alert("Вы отменили выполнение.")
+// )
+
+
+// Тренируем Function Declaration:
+// Создай функцию с помощью объявления функции, которая принимает два числа и возвращает их сумму.
+
+
+// Напиши функцию-объявление, которая выводит в консоль приветствие с именем пользователя, 
+// переданным в качестве аргумента.

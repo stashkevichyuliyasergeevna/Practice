@@ -278,3 +278,12 @@ const practice14 = text.length < 10 ?
     () => { alert(`Текст короткий`) } :
     () => { alert(`Текст подходящий`) }
 practice14()
+
+
+// Создай функцию с return для проверки условия — действительно ли счёт игрока больше 100
+// Используй функцию вместо условия
+function practice15(num) {
+    return num > 100
+}
+let userNum = prompt(`Введите число для првоерки `)
+practice15(userNum) ? alert('Больше 100') : alert(`Меньше 100`)

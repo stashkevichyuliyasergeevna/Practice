@@ -2,6 +2,6 @@
 
 git add .
 
-git commit -m "Описание изменений"
+git commit -m "Тренируюсь"
 
 git push

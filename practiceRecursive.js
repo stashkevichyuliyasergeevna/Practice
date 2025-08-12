@@ -32,5 +32,51 @@
 
 
 
+// Дано вложенное сочетание чисел и массивов.
+// Напиши функцию sumNestedNumbers, которая принимает такую структуру 
+// и возвращает сумму всех чисел внутри нее, независимо от уровня вложенности.
+{
+    const data = [1, [2, 3], [4, [5, 6]], 7];
+    function sumNestedNumbers(arr) {
+        let sum = 0
+        for (let i of arr) {
+            if (typeof (i) === `number`) {
+                sum += i
+            } else if (Array.isArray(i)) {
+                sum += sumNestedNumbers(i)
+            }
+        }
+        return sum
+    }
+    console.log(sumNestedNumbers(data)) // 28
+}
 
 
+
+// Дано вложенное объектное дерево.
+// Напиши функцию countProperties, которая принимает такой объект 
+// и возвращает общее количество свойств во всех уровнях вложенности.
+{
+    const data = {
+        name: 'Alice',
+        address: {
+            city: 'Wonderland',
+            zip: '12345',
+            coordinates: {
+                lat: 52.52,
+                lng: 13.405
+            }
+        },
+        preferences: {
+            color: 'blue',
+            food: {
+                breakfast: 'pancakes',
+                dinner: 'steak'
+            }
+        }
+    };
+
+    function countProperties(obj) {
+
+    }
+}

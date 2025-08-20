@@ -331,3 +331,292 @@
     dog.makeSound(); // Выведет "Woof!"
     console.log(dog.species); // Наследует from animal
 }
+
+
+
+// Даны два объекта. 
+// Создайте новый объект, объединяя obj1 и obj2, чтобы в результате было: { a: 1, b: 4, c: 5 }
+{
+    const obj1 = { a: 1, b: 2 };
+    const obj2 = { b: 4, c: 5 };
+    const newObj = Object.assign({}, obj1, obj2);
+    console.log(newObj) // { a: 1, b: 4, c: 5 }
+}
+
+
+
+// Дана переменная. Используйте метод, чтобы скопировать свойства из объекта { y: 10 } в target. 
+// После этого target должен выглядеть так: { x: 0, y: 10 }.
+{
+    const target = { x: 0 };
+    const obj = { y: 10 };
+    Object.assign(target, obj)
+    console.log(target) // { x: 0, y: 10 }
+}
+
+
+
+// Дана функция, которая должна расширить объект user новыми свойствами из другого объекта. 
+// Реализуйте это с помощью метода.
+{
+    const user = { name: 'Ivan' };
+    const updates = { age: 30, city: 'Moscow' };
+    // Ваша задача — обновить user так, чтобы он содержал все свойства из updates.
+    function practice(target, data) {
+        Object.assign(target, data)
+    }
+    practice(user, updates)
+    console.log(user) // { name: 'Ivan', age: 30, city: 'Moscow' }
+    user.age = 20
+    console.log(updates) // Не изменилось { age: 30, city: 'Moscow' }
+}
+
+
+
+// Создайте объект animal с методом speak(), который выводит 'Animal speaks'. 
+// Затем создайте объект dog, который наследует от animal. Вызовите dog.speak().
+{
+    let animal = {
+        speak() {
+            console.log('Animal speaks')
+        }
+    }
+    let dog = Object.assign({}, animal)
+    dog.speak() // Animal speaks
+}
+
+
+
+// Создайте объект car, унаследованный от объекта { brand: 'Toyota' }. 
+// Добавьте к нему собственное свойство model. 
+// Проверьте, что у вас есть доступ к свойствам прототипа и собственным.
+{
+    let obj = {
+        brand: 'Toyota'
+    }
+    let car = Object.assign({}, obj, { model: `1` })
+    console.log(car.model, car.brand) // 1 Toyota
+}
+
+
+
+// Создайте объект parent с методом greet(). 
+// Затем создайте новый объект через Object.create(parent) и добавьте ему собственное свойство name. 
+// Вызовите метод greet() у нового объекта.
+{
+    let parent = {
+        name: `Yuliya`,
+        greet() {
+            console.log(this.name, `, hello!`)
+        }
+    }
+    let parent2 = Object.create(parent, {
+        name: {
+            value: `Timosha`,
+            writable: true,
+            enumerable: true,
+            configurable: true,
+        }
+    })
+    parent2.greet() // Timosha , hello!
+}
+
+
+
+// Создайте объект person. С помощью метода добавьте ему свойства:
+// name со значением 'Ivan', writable — true;
+// age со значением 25, writable — false;
+// Проверьте изменение этих свойств.
+{
+    let person = {}
+    Object.defineProperties(person, {
+        name: {
+            value: `Ivan`,
+            writable: true
+        },
+        age: {
+            value: 25,
+            writable: false
+        }
+    })
+    console.log(person.name, person.age) // Ivan 25
+    person.name = `Yuliya`
+    person.age = 29
+    console.log(person.name, person.age) // Yuliya 25
+}
+
+
+
+// Обновление нескольких свойств
+// Дано существующее свойство объекта. Измените оба свойства так,
+// чтобы они были не перечисляемыми и не могли быть удалены, с помощью одного вызова.
+{
+    const obj = { a: 10, b: 20 };
+    Object.defineProperties(obj, {
+        a: {
+            enumerable: false,
+            configurable: false
+        },
+        b: {
+            enumerable: false,
+            configurable: false
+        }
+    })
+}
+
+
+
+// Настройка дескрипторов
+// Создайте объект и добавьте одно свойство через метод, 
+// сделав его только для чтения и скрытым из циклов. 
+// Проверьте поведение.
+{
+    const obj = {
+        b: 1,
+        c: 2
+    }
+    Object.defineProperty(obj, `a`, {
+        value: 0,
+        writable: false,
+        enumerable: false,
+        configurable: true,
+    })
+    console.log(obj.a) // 0
+    obj.a = 1
+    console.log(obj.a) // 0
+    for (let key in obj) {
+        console.log(obj[key])
+    } // 1, 2
+}
+
+
+
+// Создание свойства с ограниченными возможностями
+// Создайте объект и добавьте свойство id со значением '12345', 
+// сделайте его только для чтения и скрытым из циклов. 
+// Проверьте, что изменение значения невозможно.
+{
+    let obj = {
+        id: 12345
+    }
+    Object.defineProperty(obj, `id`, {
+        writable: false,
+        enumerable: false
+    })
+    obj.id = 1
+    console.log(obj.id) // 12345
+}
+
+
+
+// Изменение существующего свойства. 
+// Измените дескриптор свойства name, сделав его недоступным для изменения  
+// и скрытым из циклов через один вызов метода.
+{
+    const user = { name: 'Ivan', age: 30 };
+    Object.defineProperties(user, {
+        name: {
+            writable: false,
+            enumerable: false
+        },
+        age: {
+            writable: false,
+            enumerable: false
+        }
+    })
+}
+
+
+
+// Настройка свойства для удаления или изменения
+// Создайте объект с одним свойством. 
+// Сделайте его так, чтобы его нельзя было удалить или переопределить.
+// Попробуйте удалить или изменить — убедитесь в результате.
+{
+    let obj = {
+        name: `Yuliya`
+    }
+    Object.defineProperty(obj, `name`, {
+        writable: false,
+        configurable: false
+    })
+    obj.name = `Y`
+    console.log(obj.name) // Yuliya
+    delete (obj.name)
+    console.log(obj.name) // Yuliya
+}
+
+{
+    function deepEqual(obj1, obj2) {
+        // Проверка на одинаковость по значению и типу
+        if (Object.is(obj1, obj2)) {
+            return true;
+        }
+        // Проверка на примитив
+        if (typeof (obj1) !== `object` && typeof (obj2) !== `object` && obj1 === null && obj2 === null) {
+            return false
+        }
+        // Проверка на массив
+        if (Array.isArray(obj)) {
+            for (let i of obj) { }
+        }
+        // проверка на объект
+    }
+}
+
+
+// Дан массив объектов, каждый из которых представляет студента с именем и оценкой.
+// Задача: Используя метод, сгруппировать студентов по их оценкам. 
+// В результате должна получиться структура, где ключи — оценки, 
+// а значения — массивы студентов с этой оценкой.
+{
+    const students = [
+        { name: "Иван", grade: 5 },
+        { name: "Мария", grade: 4 },
+        { name: "Павел", grade: 5 },
+        { name: "Анна", grade: 3 },
+        { name: "Дмитрий", grade: 4 },
+    ];
+    const result = Object.groupBy(students, (data) => {
+        return data.grade
+    })
+    console.log(result)
+
+    // [Object: null prototype] {
+    //   '3': [ { name: 'Анна', grade: 3 } ],
+    //   '4': [ { name: 'Мария', grade: 4 }, { name: 'Дмитрий', grade: 4 } ],
+    //   '5': [ { name: 'Иван', grade: 5 }, { name: 'Павел', grade: 5 } ]
+    // }
+}
+
+
+// Дан массив товаров, у каждого есть название и цена
+// Используя метод, сгруппировать товары по диапазонам цен:
+// "дешёвые" — цена до 50 включительно,
+// "средние" — цена от 51 до 200,
+// "дорогие" — цена выше 200.
+// В результате должна получиться структура с тремя свойствами, каждое из которых содержит 
+// массив товаров, попавших в соответствующий диапазон.
+{
+    const products = [
+        { name: "Книга", price: 150 },
+        { name: "Ручка", price: 20 },
+        { name: "Тетрадь", price: 50 },
+        { name: "Лампа", price: 300 },
+        { name: "Карандаш", price: 20 },
+    ];
+    const result = Object.groupBy(products, (value) => {
+        return value.price <= 50 ? "дешёвые" : value.price > 50 && value.price <= 200 ? "средние" : "дорогие"
+    })
+    console.log(result)
+
+    //   [Object: null prototype] {
+    //   'средние': [ { name: 'Книга', price: 150 } ],
+    //   'дешёвые': [
+    //     { name: 'Ручка', price: 20 },
+    //     { name: 'Тетрадь', price: 50 },
+    //     { name: 'Карандаш', price: 20 }
+    //   ],
+    //   'дорогие': [ { name: 'Лампа', price: 300 } ]
+    //   }
+}

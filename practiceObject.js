@@ -620,3 +620,228 @@
     //   'дорогие': [ { name: 'Лампа', price: 300 } ]
     //   }
 }
+
+
+
+// Создайте два объекта с одинаковыми свойствами. Проверьте, равны ли они по значению с помощью метода
+{
+    obj1 = {
+        a: 10
+    }
+    obj2 = obj1
+    obj3 = {
+        a: 10
+    }
+    console.log(Object.is(obj1, obj2)) // true
+    console.log(Object.is(obj1, obj3)) // false
+}
+
+
+
+// Создайте исходный объект с несколькими свойствами. 
+// Создайте новый объект, скопировав свойства из первого и добавив новые свойства.
+{
+    let obj1 = {
+        a: 1,
+        b: 2
+    }
+    let obj2 = Object.assign({}, obj1, { c: 3 })
+    console.log(obj2) // { a: 1, b: 2, c: 3 }
+}
+
+
+
+// Создайте объект с несколькими свойствами. 
+// Получите массив пар [ключ, значение] этого объекта. 
+// Затем из этого массива создайте новый объект с такими же свойствами.
+{
+    let obj1 = {
+        a: 1,
+        b: 2
+    }
+    let arr = Object.entries(obj1)
+    console.log(arr) // [ [ 'a', 1 ], [ 'b', 2 ] ]
+    let obj2 = Object.fromEntries(arr)
+    console.log(obj2) // { a: 1, b: 2 }
+}
+
+
+
+// Создайте объект с обычными свойствами и символами-свойствами. 
+// Получите список всех собственных свойств, включая неперечисляемые, а также список символов.
+{
+    const sym1 = Symbol('id');
+    let obj = {
+        a: 1,
+        b: 2,
+        [sym1]: `Y`
+    }
+    let data1 = Object.getOwnPropertyNames(obj)
+    let data2 = Object.getOwnPropertySymbols(obj)
+    console.log(data1) // [ 'a', 'b' ]
+    console.log(data2) // [ Symbol(id) ]
+}
+
+
+
+// Создайте объект и получите массив его значений и массив его ключей.
+{
+    let obj = {
+        a: 1,
+        b: 2,
+        с: 3
+    }
+    let keys = Object.keys(obj)
+    let values = Object.values(obj)
+    console.log(keys) // [ 'a', 'b', 'с' ]
+    console.log(values) // [ 1, 2, 3 ]
+}
+
+
+
+// Проверьте, содержит ли объект определенное свойство, двумя разными способами.
+{
+    let obj = {
+        a: 1,
+        b: 2,
+        с: 3
+    }
+    console.log(obj.hasOwnProperty(`a`)) // true
+    console.log(Object.hasOwn(obj, `b`)) // true
+}
+
+
+
+// Проверьте, является ли определенное свойство у объекта собственным и перечисляемым.
+{
+    let obj = {
+        a: 1,
+        b: 2,
+        с: 3
+    }
+    console.log(obj.propertyIsEnumerable(`a`)) // true
+    console.log(obj.propertyIsEnumerable(`q`)) // false
+}
+
+
+
+// Напишите функцию, которая группирует элементы массива по заданному признаку (ключу). 
+// Используйте для этого методы работы с объектами.
+{
+    let arr = [10, 5, 22, 11, 3, 4, 2]
+    let result = Object.groupBy(arr, (data) => {
+        return data % 2 === 0 ? `без остатка` : `с остатком`
+    })
+    console.log(result)
+    //  [Object: null prototype] {
+    //   'без остатка': [ 10, 22, 4, 2 ],
+    //   'с остатком': [ 5, 11, 3 ]
+    //  }
+
+}
+
+
+
+// Создайте объект и сделайте его неизменяемым (заморозьте). 
+// Проверьте его состояние методом.
+// Попробуйте изменить свойства — убедитесь, что изменения не произошли.
+{
+    let obj = {
+        a: 1,
+        b: 2,
+        с: 3
+    }
+    Object.freeze(obj)
+    obj.a = 11
+    obj[`d`] = 4
+    console.log(obj) // { a: 1, b: 2, 'с': 3 }
+    console.log(Object.isFrozen(obj)) // true
+}
+
+
+
+// Запретите добавление новых свойств к объекту и проверьте это. 
+// Попытайтесь добавить новое свойство — убедитесь, что это невозможно.
+{
+    let obj = {
+        a: 1,
+        b: 2,
+        с: 3
+    }
+    Object.preventExtensions(obj)
+    console.log(Object.isExtensible(obj)) // false
+    obj[`d`] = 4
+    console.log(obj) // { a: 1, b: 2, 'с': 3 }
+}
+
+
+
+// Запечатайте объект так, чтобы нельзя было добавлять или удалять свойства, 
+// но можно было изменять существующие. 
+// Проверьте его состояние и попробуйте удалить или добавить свойства — убедитесь в результате.
+{
+    let obj = {
+        a: 1,
+        b: 2,
+        с: 3
+    }
+    Object.seal(obj)
+    console.log(Object.isSealed(obj)) // true
+    obj.a = 10
+    obj[`d`] = 4
+    console.log(obj) // { a: 10, b: 2, 'с': 3 }
+}
+
+
+
+// Создайте объект и добавьте или измените одно из его свойств с помощью специальных настроек (дескрипторов). 
+// Затем получите описание этого свойства и выведите его параметры.
+{
+    let obj = {
+        a: 1,
+        b: 2,
+        с: 3
+    }
+    Object.defineProperty(obj, `a`, {
+        value: 11,
+        writable: false,
+        enumerable: true,
+        configurable: true
+    })
+    console.log(obj.a) // 11
+    console.log(Object.getOwnPropertyDescriptor(obj, `a`))
+    // { value: 11, writable: false, enumerable: true, configurable: true }
+}
+
+
+
+// Создайте прототипный объект со своими методами или свойствами. 
+// Создайте новый объект на основе этого прототипа,  
+// проверьте его прототипные связи через соответствующие проверки (два способа).
+{
+    let obj1 = {
+        a: 1,
+        b: 2,
+        с: 3,
+        consolloger: function (data) {
+            console.log(data)
+        }
+    }
+    let obj2 = Object.create(obj1)
+    console.log(Object.getPrototypeOf(obj2))
+    // { a: 1, b: 2, 'с': 3, consolloger: [Function: consolloger] }Ï
+    console.log(obj1.isPrototypeOf(obj2)) // true
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

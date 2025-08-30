@@ -537,3 +537,113 @@
 
 
 
+// Тренировка повышенной сложности для методов map, filter, sort, reduce
+
+// Задача 1: Обработка массива объектов с вложенными структурами
+// Задача:
+// Отфильтровать только активных пользователей.
+// Для каждого активного пользователя — посчитать средний балл.
+// Отсортировать их по убыванию среднего балла.
+// Создать массив строк вида: "Name: <name>, Avg Score: <average>".
+{
+    {
+        const data = [
+            { id: 1, name: 'Alice', scores: [85, 92], active: true },
+            { id: 2, name: 'Bob', scores: [58, 64], active: false },
+            { id: 3, name: 'Charlie', scores: [95, 100], active: true },
+            { id: 4, name: 'David', scores: [70, 75], active: false },
+            { id: 5, name: 'Eve', scores: [88, 90], active: true }
+        ];
+
+        let activeArr = data.filter((value) => {
+            if (value.active == true) return value
+        })
+
+        activeArr.forEach((value) => {
+            let average = value.scores.reduce((acc, value) => {
+                return acc + value
+            }, 0) / value.scores.length
+            value[`average`] = average
+        })
+
+        activeArr.sort((a, b) => {
+            return b.average - a.average
+        })
+        let strArr = []
+        activeArr.forEach((value) => {
+            strArr.push(`Name: ${value.name}, Avg Score: ${value.average}`)
+        })
+        console.log(activeArr)
+        // [
+        //     {
+        //         id: 3,
+        //         name: 'Charlie',
+        //         scores: [95, 100],
+        //         active: true,
+        //         average: 97.5
+        //     },
+        //     { id: 5, name: 'Eve', scores: [88, 90], active: true, average: 89 },
+        //     {
+        //         id: 1,
+        //         name: 'Alice',
+        //         scores: [85, 92],
+        //         active: true,
+        //         average: 88.5
+        //     }
+        // ]
+        console.log(strArr)
+        // [
+        //     'Name: Charlie, Avg Score: 97.5',
+        //     'Name: Eve, Avg Score: 89',
+        //     'Name: Alice, Avg Score: 88.5'
+        // ]
+    }
+}
+
+
+
+// Задача 2: Комплексная обработка числовых данных
+// Задача:
+// Отфильтровать числа, которые делятся на 3 или 5.
+// Умножить каждое оставшееся число на 2.
+// Отсортировать полученные числа по возрастанию.
+// Посчитать сумму всех чисел, которые получились после сортировки.
+{
+    const numbers = [12, 5, 8, 130, 44, 55, 78, 23, 9, 100];
+}
+
+
+
+// Задача 3: Обработка строк и объектов
+// Задача:
+// Отфильтровать строки, содержащие слово 'is'.
+// Преобразовать каждую строку так, чтобы каждое слово начиналось с заглавной буквы.
+// Отсортировать строки по длине (от коротких к длинным).
+// Создать объект, где ключ — это исходная строка, а значение — длина этой строки.
+{
+    const phrases = [
+        'Hello world!',
+        'JavaScript is awesome.',
+        'Let\'s code.',
+        'OpenAI GPT-4.',
+        'ChatGPT is helpful!'
+    ];
+}
+
+
+// Задача 4: Сложное использование reduce
+// Задача:
+// Используя reduce, посчитать:
+// Общий доход (сумма amount для type: 'income')
+// Общие расходы (сумма amount для type: 'expense')
+// Итоговый баланс (доход минус расходы)
+{
+    const transactions = [
+        { id: 1, type: 'income', amount: 500 },
+        { id: 2, type: 'expense', amount: 200 },
+        { id: 3, type: 'income', amount: 700 },
+        { id: 4, type: 'expense', amount: 300 },
+        { id: 5, type: 'income', amount: 400 }
+    ];
+}
+

@@ -290,6 +290,19 @@
             ]
         }
     };
+    const { statusCode,
+        headers: {
+            contentType: type = 'text/plain'
+        },
+        data: {
+            usersCount: count = -0,
+            usersList
+        }
+    } = response
+    const arr = usersList.map((value) => {
+        return value.name
+    })
+    console.log(type, count, arr) // application/json null [ 'Alice', 'Bob' ]
 }
 
 
@@ -301,7 +314,7 @@
 // дату(date) — оставить как есть.
 // сумму первого показателя продаж(sales[0]) — в переменную firstSale.
 // сумму последнего расхода(expenses[expenses.length - 1]) — в переменную lastExpense.
-// итоговую прибыль(profit.reduce(...)) — вычислить сумму всех элементов массива и сохранить как число в переменную totalProfit.
+// итоговую прибыль summary через метод (profit.reduce(...)) — вычислить сумму всех элементов массива и сохранить как число в переменную totalProfit.
 // Вывести все полученные значения.
 {
     const report = {
@@ -317,5 +330,18 @@
             totalExpenses: '$1800'
         }
     };
+    const {
+        title: reportTitle,
+        date,
+        metrics: {
+            sales: [firstSale],
+            expenses: [, , lastExpense],
+            profit
+        },
+    } = report
+    const totalProfit = profit.reduce((acc, value) => {
+        return acc + value
+    })
+    console.log(reportTitle, date, firstSale, lastExpense, totalProfit) // Monthly Report 2023-10-01 1000 600 2700
 }
 

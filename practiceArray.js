@@ -608,8 +608,29 @@
 // Умножить каждое оставшееся число на 2.
 // Отсортировать полученные числа по возрастанию.
 // Посчитать сумму всех чисел, которые получились после сортировки.
+// Использовать только map, filter, sort (toSorted), reduce
 {
     const numbers = [12, 5, 8, 130, 44, 55, 78, 23, 9, 100];
+
+    const filterArray = numbers.filter((value) => {
+        return value % 3 === 0 || value % 5 === 0
+    })
+    console.log(filterArray) // [12, 5, 130, 55, 78, 9, 100]
+
+    const multipliedArray = filterArray.map((value) => {
+        return value * 2
+    })
+    console.log(multipliedArray) // [24, 10, 260, 110, 156, 18, 200]
+
+    const sortedArray = multipliedArray.toSorted((a, b) => {
+        return a - b
+    })
+    console.log(sortedArray) // // [10, 18, 24, 110, 156, 200, 260]
+
+    const summ = sortedArray.reduce((acc, value) => {
+        return acc + value
+    })
+    console.log(summ) // 778
 }
 
 
@@ -628,6 +649,37 @@
         'OpenAI GPT-4.',
         'ChatGPT is helpful!'
     ];
+    const filterArray = phrases.filter((value) => {
+        return value.includes(`is`)
+    })
+    console.log(filterArray)
+    // [ 'JavaScript is awesome.', 'ChatGPT is helpful!' ]
+
+    const titleArray = filterArray.map((value) => {
+        const stringArray = value.split(` `)
+
+        const upperArray = stringArray.map((value) => {
+            return value[0].toUpperCase() + value.slice(1);
+        })
+
+        let resultStr = upperArray.join(` `)
+        return resultStr
+    })
+    console.log(titleArray)
+    // [ 'JavaScript Is Awesome.', 'ChatGPT Is Helpful!' ]
+
+    const sortArray = titleArray.toSorted((value1, value2) => {
+        return value1.length - value2.length
+    })
+    console.log(sortArray)
+    // [ 'ChatGPT Is Helpful!', 'JavaScript Is Awesome.' ]
+
+    let obj = {}
+    sortArray.forEach((value) => {
+        obj[value] = value.length
+    })
+    console.log(obj)
+    // { 'ChatGPT Is Helpful!': 19, 'JavaScript Is Awesome.': 22 }
 }
 
 
@@ -645,5 +697,72 @@
         { id: 4, type: 'expense', amount: 300 },
         { id: 5, type: 'income', amount: 400 }
     ];
+
+    const allMoney = transactions.reduce((acc, value) => {
+        if (value.type === 'income') {
+            return acc + value.amount;
+        }
+        return acc;
+    }, 0);
+    console.log(allMoney) // 1600
+
+    const noMoney = transactions.reduce((acc, value) => {
+        if (value.type === 'expense') {
+            return acc + value.amount;
+        }
+        return acc
+    }, 0)
+    console.log(noMoney) // 1600
+    //console.log(noMoney) // 500
+    const balance = allMoney - noMoney
+    console.log(balance) // 1100
 }
+
+
+
+// Задача 5: Анализ данных о продажах
+// У вас есть массив объектов, каждый из которых представляет продажу товара. Каждый объект содержит следующую информацию:
+// productId — уникальный идентификатор товара
+// category — категория товара
+// price — цена за единицу товара
+// quantity — количество проданных единиц
+// Задача:
+// Посчитать общую выручку (сумму price * quantity) по всем продажам.
+// Создать объект, где ключ — это категория товара, а значение — сумма выручки по этой категории.
+// Найти товар с максимальной выручкой (то есть price * quantity) и вывести его productId и сумму выручки.
+// Определить, есть ли в данных хотя бы одна продажа на сумму более 1000.
+{
+    const sales = [
+        { productId: 'A1', category: 'electronics', price: 300, quantity: 4 },
+        { productId: 'B2', category: 'clothing', price: 50, quantity: 10 },
+        { productId: 'A2', category: 'electronics', price: 200, quantity: 5 },
+        { productId: 'C3', category: 'home', price: 150, quantity: 3 },
+        { productId: 'B3', category: 'clothing', price: 80, quantity: 8 },
+        { productId: 'A3', category: 'electronics', price: 400, quantity: 2 },
+        { productId: 'D4', category: 'garden', price: 250, quantity: 4 }
+    ];
+    const fullMoney = sales.reduce((acc, value) => {
+        acc += value.price * value.quantity
+        return acc
+    }, 0)
+    console.log(fullMoney) // 5590
+
+    const obj = {}
+    sales.forEach((value) => {
+        const money = value.price * value.quantity
+        if (!obj[value.category]) {
+            obj[value.category] = money
+        } else {
+            obj[value.category] += money
+        }
+    })
+    console.log(obj)
+    // { electronics: 3000, clothing: 1140, home: 450, garden: 1000 }
+    let much = 0
+    for (let value in obj) {
+        if (obj[value] >= much) much = obj[value]
+    }
+    much >= 1000 ? console.log(`есть`) : console.log(`нет`) // есть
+}
+
 
